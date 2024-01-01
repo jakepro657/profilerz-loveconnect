@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: '2024 프로파일러 AI',
-  description: '재미로 즐기는 새해를 맞이 AI 심리 프로파일링!',
+  description: '재미로 즐기는 새해 맞이 AI 심리 프로파일링!',
 }
 
 export default function RootLayout({
