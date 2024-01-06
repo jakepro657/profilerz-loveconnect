@@ -1,6 +1,6 @@
 "use client";
 import Bubble from "@/components/Bubble";
-import { m, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
 
   const [isMounted, setIsMounted] = useState(false);
 
-  const [computerName, setComputerName] = useState("은지");
+  const [computerName, setComputerName] = useState("지민");
   const [myName, setMyName] = useState("유빈");
 
   const [chatline, setChatline] = useState("");
@@ -41,6 +41,7 @@ export default function Home() {
   };
 
   const onSubmitHandler = async (e: any) => {
+    setChatline("");
     e.preventDefault();
 
     if (chatline.length < 1) {
@@ -54,7 +55,6 @@ export default function Home() {
 
     pushText(response.message, true);
 
-    setChatline("");
   };
 
   const pushText = (txt: string, isAI: boolean) => {
@@ -78,9 +78,9 @@ export default function Home() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className=" w-full sm:w-[500px] h-full bg-gradient-to-b from-sky-100 to-sky-50 drop-shadow-md overflow-y-scroll"
+        className="pt-[5%] mb-[10%]  w-full sm:w-[500px] h-full bg-gradient-to-b from-sky-100 to-sky-50 drop-shadow-md overflow-y-scroll"
       >
-        <div className="pb-[20%] flex flex-col w-full h-full text-center p-6">
+        <div className="flex flex-col w-full h-full text-center p-6">
           <div className="flex flex-col gap-2 h-full">
             {toRenderText.map((text, i) => (
               <Bubble
