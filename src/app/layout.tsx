@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import RecoilRootProvider from '@/components/RecoilRootProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '2024 프로파일러 AI',
-  description: '재미로 즐기는 새해를 맞이 AI 심리 프로파일링!',
+  title: '러브커넥트',
+  description: '여러분이 좋아하는 사람과 채팅해보세요!',
 }
 
 export default function RootLayout({
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <RecoilRootProvider>{children}</RecoilRootProvider>
+      </body>
     </html>
   )
 }

@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@langchain/openai": "^0.0.9",
+    "framer-motion": "^10.16.16",
     "langchain": "^0.0.213",
     "next": "14.0.4",
+    "openai": "4.0.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@types/node": "^20",
