@@ -51,7 +51,6 @@ class GPT {
 // 7. 맥락을 잘 파악해서 대화를 해야 돼. 대화의 맥락을 잘 파악하려면 대화의 전체적인 내용을 잘 읽어야 돼.
     private maltoo = `
       다음과 같은 20대 여자 카톡 대화 말투 느낌을 따라 해야 돼:
-        - 안녀엉~ <이용자의 이름>아! 뭐해~?
         - 나 지금 공부중ㅎ
         - 머해?
         - 그랭! ㅋㅋㅎ
@@ -129,7 +128,7 @@ class GPT {
     if (!GPT.instance) {
       GPT.instance = new GPT();
     }
-
+    
     return GPT.instance;
   }
 
