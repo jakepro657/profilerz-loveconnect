@@ -130,7 +130,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="w-full sm:w-[500px] bg-sky-100 overflow-y-scroll"
+        className="w-full h-full sm:w-[500px] bg-sky-100 overflow-y-scroll"
       >
         <div className="flex flex-col gap-2 w-full h-full text-center p-6">
           {toRenderText.map((text, i) => (
