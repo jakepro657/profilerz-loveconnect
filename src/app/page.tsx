@@ -113,7 +113,7 @@ export default function Home() {
   }, [myName, computerName]);
 
   return (
-    <main className="select-none font-pretendard flex flex-col justify-center items-center h-screen w-screen bg-gray-100">
+    <main className="select-none font-pretendard flex flex-col bg-sky-100 justify-center items-center h-screen w-screen">
       <GuidePopUp
         isOpen={isOpen}
         closeHandler={() => setIsOpen(false)}
@@ -130,8 +130,7 @@ export default function Home() {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        style={{ flex: 9 }}
-        className="w-full sm:w-[500px] bg-gradient-to-b from-sky-100 to-sky-50 drop-shadow-md overflow-y-scroll"
+        className="w-full sm:w-[500px] bg-sky-100 overflow-y-scroll"
       >
         <div className="flex flex-col gap-2 w-full h-full text-center p-6">
           {toRenderText.map((text, i) => (
@@ -145,9 +144,11 @@ export default function Home() {
         </div>
         <div ref={endOfMessagesRef} />
       </motion.div>
+      <div
+        className="h-[15%] bg-sky-100"
+      />
       <motion.div
-        style={{ flex: 1 }}
-        className="relative bottom-0 flex w-screen sm:w-[500px]"
+        className="fixed bottom-0 flex w-screen sm:w-[500px]"
       >
         <textarea
           className="w-full bg-white drop-shadow-lg resize-none "
