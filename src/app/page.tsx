@@ -2,7 +2,7 @@
 import Bubble from "@/components/Bubble";
 import NamePopUp from "@/components/NamePopUp";
 import { motion } from "framer-motion";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [computerName, setComputerName] = useState("지민");
@@ -82,7 +82,7 @@ export default function Home() {
       {
         AI: true,
         name: computerName,
-        content: `${myName}이 어디얌??`,
+        content: `${myName}! 머해??`,
       },
     ]);
   }, [myName]);
