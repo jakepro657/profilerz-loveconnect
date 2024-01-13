@@ -1,13 +1,15 @@
 "use client";
 import Bubble from "@/components/Bubble";
-import NamePopUp from "@/components/NamePopUp";
+import GuidePopUp from "@/components/GuidePopUp";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
-  const [computerName, setComputerName] = useState("지민");
+  const [computerName, setComputerName] = useState("");
   const [myName, setMyName] = useState("");
   const [isOpen, setIsOpen] = useState(true);
+  const [isSecondOpen, setIsSecondOpen] = useState(false);
+  const endOfMessagesRef = useRef<any>(null);
 
   const [chatline, setChatline] = useState("");
   const [toRenderText, setToRenderText] = useState<
@@ -34,6 +36,16 @@ export default function Home() {
     return data;
   };
 
+  useEffect(() => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [toRenderText.length]);
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      onSubmitHandler(e);
+    }
+  };
+
   const onChangeHandler = (e: any) => {
     setChatline(e.target.value);
   };
@@ -51,7 +63,20 @@ export default function Home() {
 
     const response = await fetchAPI(chatline);
 
-    pushText(response.message, true);
+    const splitSentence = splitString(response.message);
+    splitSentence?.forEach((sentence: string) => {
+      setTimeout(() => {
+        pushText(sentence, true);
+      }, 1500);
+    });
+    // pushText(response.message, true);
+  };
+
+  const splitString = (inputString: string) => {
+    const regex = /[^ㅋㅎ!~.]*[ㅋㅎ!~.]*/g;
+    return inputString
+      .match(regex)
+      ?.filter((s) => s != " " && s.trim().length > 0);
   };
 
   const pushText = (txt: string, isAI: boolean) => {
@@ -74,8 +99,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    
     if (myName.length < 1) return;
+    if (computerName.length < 1) return;
 
     setToRenderText((state) => [
       ...state,
@@ -85,39 +110,50 @@ export default function Home() {
         content: `${myName}! 머해??`,
       },
     ]);
-  }, [myName]);
+  }, [myName, computerName]);
 
   return (
-    <main className="select-none font-pretendard flex justify-center items-center h-screen w-screen bg-gray-100">
-      <NamePopUp
+    <main className="select-none font-pretendard flex flex-col justify-center items-center h-screen w-screen bg-gray-100">
+      <GuidePopUp
         isOpen={isOpen}
         closeHandler={() => setIsOpen(false)}
         nameHandler={(name: string) => setMyName(name)}
+        content="제 이름은... (성 제외)"
+      />
+      <GuidePopUp
+        isOpen={myName.length > 0 && computerName.length < 1}
+        closeHandler={() => setIsSecondOpen(false)}
+        nameHandler={(name: string) => setComputerName(name)}
+        content="상대의 이름은... (성 제외)"
       />
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="pt-[5%] mb-[10%]  w-full sm:w-[500px] h-full bg-gradient-to-b from-sky-100 to-sky-50 drop-shadow-md overflow-y-scroll"
+        style={{ flex: 9 }}
+        className="w-full sm:w-[500px] bg-gradient-to-b from-sky-100 to-sky-50 drop-shadow-md overflow-y-scroll"
       >
-        <div className="flex flex-col w-full h-full text-center p-6">
-          <div className="flex flex-col gap-2 h-full">
-            {toRenderText.map((text, i) => (
-              <Bubble
-                key={i}
-                name={text.name}
-                content={text.content}
-                isAI={text.AI}
-              />
-            ))}
-          </div>
+        <div className="flex flex-col gap-2 w-full h-full text-center p-6">
+          {toRenderText.map((text, i) => (
+            <Bubble
+              key={i}
+              name={text.name}
+              content={text.content}
+              isAI={text.AI}
+            />
+          ))}
         </div>
+        <div ref={endOfMessagesRef} />
       </motion.div>
-      <motion.div className="fixed bottom-0 flex w-screen sm:w-[500px]">
+      <motion.div
+        style={{ flex: 1 }}
+        className="relative bottom-0 flex w-screen sm:w-[500px]"
+      >
         <textarea
           className="w-full bg-white drop-shadow-lg resize-none "
           onChange={onChangeHandler}
           value={chatline}
+          onKeyDown={handleKeyPress}
         />
         <button
           onClick={onSubmitHandler}
