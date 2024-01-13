@@ -24,10 +24,10 @@ function NamePopUp({ nameHandler, closeHandler, isOpen }: Props) {
     <>
       <div className="z-50 absolute left-0 top-0 w-full h-full bg-black bg-opacity-20" />
       <div className="z-50 absolute drop-shadow-lg rounded-md top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-80 h-64 bg-white flex flex-col gap-4 justify-center items-center">
-        <p>제 이름은...</p>
+        <p>제 이름은... {"("}성 제외{")"}</p>
         <input
           className="w-64 h-10 border-2 text-center border-gray-300 rounded-md outline-none p-2"
-          placeholder="이름을 입력하세요."
+          placeholder="(성 제외) 이름을 입력하세요."
           onChange={onChangeHandler}
         />
         <button
