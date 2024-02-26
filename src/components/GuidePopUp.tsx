@@ -15,7 +15,7 @@ function GuidePopUp({ nameHandler, closeHandler, isOpen, content }: Props) {
   };
 
   const onSubmitHandler = (e: any) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.type === "click") {
       e.preventDefault();
       setName("");
       nameHandler(name);
