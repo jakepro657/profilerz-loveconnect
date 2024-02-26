@@ -124,7 +124,7 @@ class GPT {
       `
     }
 
-    this.situation = this.situation.concat(`\n4. `);
+    this.situation = type;
   }
 
   public async generate(input: string) {
