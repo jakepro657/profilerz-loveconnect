@@ -36,7 +36,7 @@ export default function Home() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        typeCode: type, // 0, 1, 2 중 랜덤 하나 선택
+        typeCode: type.toString(), // 0, 1, 2 중 랜덤 하나 선택
         input: text,
       })
     })
