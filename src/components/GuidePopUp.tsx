@@ -15,9 +15,13 @@ function GuidePopUp({ nameHandler, closeHandler, isOpen, content }: Props) {
   };
 
   const onSubmitHandler = (e: any) => {
-    setName("");
-    nameHandler(name);
-    closeHandler();
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setName("");
+      nameHandler(name);
+      closeHandler();
+    }
+
     // e.preventDefault()
   };
 
@@ -31,6 +35,7 @@ function GuidePopUp({ nameHandler, closeHandler, isOpen, content }: Props) {
           className="w-64 h-10 border-2 text-center border-gray-300 rounded-md outline-none p-2"
           placeholder="(성 제외) 이름을 입력하세요."
           onChange={onChangeHandler}
+          onKeyDown={onSubmitHandler}
         />
         <button
           onClick={onSubmitHandler}

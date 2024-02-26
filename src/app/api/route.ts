@@ -5,11 +5,13 @@ export async function POST(req: Request) {
   
   const json = await req.json();
 
-  const { input } = json as { input: string };
+  const { input, typeCode } = json as { input: string, typeCode: string };
 
   // if (!input) {
   //   return NextResponse.json({ "response": "input is empty" });
   // }
+
+  chatManager.setAI(typeCode);
 
   const output = await chatManager.generate(input);
 

@@ -10,6 +10,8 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(true);
   const [isSecondOpen, setIsSecondOpen] = useState(false);
   const endOfMessagesRef = useRef<any>(null);
+  const [callCount, setCallCount] = useState(1);
+  const [type, setType] = useState(0);
 
   const [chatline, setChatline] = useState("");
   const [toRenderText, setToRenderText] = useState<
@@ -21,20 +23,33 @@ export default function Home() {
   >([]);
 
   const fetchAPI = async (text: string) => {
+
+    if (callCount > 5) {
+      alert("채팅은 5번까지 가능해요! 고생하셨습니다 :)");
+      window.location.reload();
+      return;
+    }
+
     const res = await fetch("/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        typeCode: type, // 0, 1, 2 중 랜덤 하나 선택
         input: text,
-      }),
-    });
+      })
+    })
 
     const data = await res.json();
+    setCallCount((prev) => prev + 1);
 
     return data;
   };
+
+  useEffect(() => {
+    setType(Math.floor(Math.random() * 3))
+  }, [])
 
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -107,8 +122,8 @@ export default function Home() {
       {
         AI: true,
         name: computerName,
-        content: `${myName}! 머해??`,
-      },
+        content: `${myName} ${type == 0 ? "요거바라랑 오숭쉐 중에 머 먹을래??" : type == 1 ? `나 공강인데 심심해\n 어디 건물쪽이야?` : "수업 끝났어?\n배고프지ㅜㅜ"}`,
+      },  
     ]);
   }, [myName, computerName]);
 
@@ -118,13 +133,13 @@ export default function Home() {
         isOpen={isOpen}
         closeHandler={() => setIsOpen(false)}
         nameHandler={(name: string) => setMyName(name)}
-        content="제 이름은... (성 제외)"
+        content="당신의 이름은... (성 제외)"
       />
       <GuidePopUp
         isOpen={myName.length > 0 && computerName.length < 1}
         closeHandler={() => setIsSecondOpen(false)}
         nameHandler={(name: string) => setComputerName(name)}
-        content="상대의 이름은... (성 제외)"
+        content="대화 상대의 이름은... (성 제외)"
       />
       <motion.div
         initial={{ opacity: 0 }}
