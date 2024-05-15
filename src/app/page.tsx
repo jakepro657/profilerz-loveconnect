@@ -25,6 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     generateChat()
+    initialSet()
   }, [id])
 
   useEffect(() => {
@@ -45,6 +46,22 @@ export default function Home() {
       ]);
     }
   }, [myName, computerName]);
+
+  const initialSet = async () => {
+    await fetch("/api/v2/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: {
+          content: `${name}! 모해!`,
+          name: myName,
+          AI: true
+        },
+        chatId: chatId,
+        id: id,
+      }),
+    })
+  }
 
   const generateUUID = async () => {
     const uuid = localStorage.getItem("ID")
@@ -80,11 +97,11 @@ export default function Home() {
   }
 
   const fetchAPI = async (text: string) => {
-    if (callCount > 5) {
-      alert("채팅은 5번까지 가능해요! 고생하셨습니다 :)");
-      window.location.reload();
-      return;
-    }
+    // if (callCount > 5) {
+    //   alert("채팅은 5번까지 가능해요! 고생하셨습니다 :)");
+    //   window.location.reload();
+    //   return;
+    // }
 
     const res = await fetch("/api/v2/gpt", {
       method: "POST",
@@ -100,7 +117,7 @@ export default function Home() {
   const generateInitialMessage = (name: string, type: number): string => {
     const messages = [
       // `${name} 요거바라랑 오숭쉐 중에 머 먹을래??`,
-      `나 공강인데 심심해\n 어디 건물쪽이야?`,
+      `${name}! 모해!`,
       // "수업 끝났어?\n배고프지ㅜㅜ",
     ];
     return messages[0];
