@@ -52,8 +52,10 @@ export async function POST(req: Request) {
 
             const messages = await prisma.message.create({
                 data: {
-                    ...message,
-                    chatId: chat.id
+                    content: message.content,
+                    name: message.name,
+                    AI: message.AI,
+                    chatId: chat.id,
                 },
             })
 

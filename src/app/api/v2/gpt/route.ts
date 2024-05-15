@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     
     return NextResponse.json({
         status: 200,
-        message: response,
+        message: response.choices[0].message.content,
         error: null
     })
 

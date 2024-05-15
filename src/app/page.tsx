@@ -57,6 +57,8 @@ export default function Home() {
       const val = await response.json()
 
       localStorage.setItem("ID", val.message.identifier)
+
+      setId(val.message.identifier)
     }
   }
 
@@ -97,11 +99,11 @@ export default function Home() {
 
   const generateInitialMessage = (name: string, type: number): string => {
     const messages = [
-      `${name} 요거바라랑 오숭쉐 중에 머 먹을래??`,
+      // `${name} 요거바라랑 오숭쉐 중에 머 먹을래??`,
       `나 공강인데 심심해\n 어디 건물쪽이야?`,
-      "수업 끝났어?\n배고프지ㅜㅜ",
+      // "수업 끝났어?\n배고프지ㅜㅜ",
     ];
-    return messages[type];
+    return messages[0];
   };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -124,7 +126,24 @@ export default function Home() {
     setChatline("");
 
     const responseGPT = await fetchAPI(cleanedText);
+
+    
+    await fetch("/api/v2/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: {
+          content: cleanedText,
+          name: myName,
+          AI: false
+        },
+        chatId: chatId,
+        id: id,
+      }),
+    })
+
     if (responseGPT) {
+      console.log(responseGPT.message)
       const splitSentence = splitString(responseGPT.message);
       splitSentence.forEach((sentence: string, index: number) => {
         setTimeout(() => pushText(sentence, true), 1500 * index);
@@ -135,17 +154,22 @@ export default function Home() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        message: responseGPT.message,
+        message: {
+          content: responseGPT.message,
+          name: computerName,
+          AI: true
+        },
         chatId: chatId,
         id: id,
       }),
     })
 
+
   };
 
   const splitString = (inputString: string): string[] => {
     const regex = /[^ㅋㅎ!~.]*[ㅋㅎ!~.]*/g;
-    return inputString.match(regex)?.filter((s) => s.trim()) ?? [];
+    return inputString?.match(regex)?.filter((s) => s.trim()) ?? [];
   };
 
   const removeEmojis = (text: string): string => {
@@ -162,10 +186,11 @@ export default function Home() {
   };
 
   return (
-    <main className="select-none font-pretendard flex flex-col bg-sky-100 justify-center items-center h-screen w-screen">
-      <button className="fixed top-2 right-2 bg-orange-300 p-2 rounded-lg" onClick={clearCache}>
+    <>
+      <button className="fixed top-2 right-2 bg-orange-300 p-2 rounded-lg z-[60]" onClick={clearCache}>
         캐시 제거
       </button>
+    <main className="select-none font-pretendard flex flex-col bg-sky-100 justify-center items-center h-screen w-screen">
       <GuidePopUp
         isOpen={isOpen}
         closeHandler={() => setIsOpen(false)}
@@ -203,5 +228,6 @@ export default function Home() {
         </button>
       </motion.div>
     </main>
+    </>
   );
 }
