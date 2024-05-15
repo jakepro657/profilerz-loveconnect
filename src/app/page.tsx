@@ -52,7 +52,7 @@ export default function Home() {
     if (uuid) {
       setId(uuid)
     } else {
-      const response = await fetch("/api/v1/user");
+      const response = await fetch("/api/v2/user");
 
       const val = await response.json()
 
@@ -66,7 +66,7 @@ export default function Home() {
   }
 
   const generateChat = async () => {
-    const response = await fetch("/api/v1/chat", {
+    const response = await fetch("/api/v2/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: id, type: "NEW" }),
@@ -84,7 +84,7 @@ export default function Home() {
       return;
     }
 
-    const res = await fetch("/api/v1/gpt", {
+    const res = await fetch("/api/v2/gpt", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ typeCode: type.toString(), input: text, chatId: chatId, username: myName, gptname: computerName }),
@@ -131,7 +131,7 @@ export default function Home() {
       });
     }
 
-    await fetch("/api/v1/chat", {
+    await fetch("/api/v2/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
