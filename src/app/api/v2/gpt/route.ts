@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         messages: [
             {
                 role: "system",
-                content: PROMPT.replace("GPT_NAME", username).replace("USER_NAME", gptname)
+                content: PROMPT.replace("GPT_NAME", gptname).replace("USER_NAME", username)
             },
             ...messages,
             {
