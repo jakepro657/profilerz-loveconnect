@@ -9,14 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@langchain/openai": "^0.0.9",
     "@prisma/client": "5.14.0",
     "@prisma/extension-accelerate": "^1.0.0",
     "@yarnpkg/pnpify": "^4.1.0",
-    "framer-motion": "^10.16.16",
+    "framer-motion": "^11.2.0",
     "langchain": "^0.0.213",
     "next": "14.0.4",
-    "openai": "4.0.0",
+    "openai": "4.47.1",
     "react": "^18",
     "react-dom": "^18",
     "recoil": "^0.7.7"
@@ -32,7 +31,7 @@
     "postcss": "^8",
     "prisma": "5.14.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.2.0"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.2.2"
 }
