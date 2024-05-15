@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Bubble from "@/components/Bubble";
 import GuidePopUp from "@/components/GuidePopUp";
 
+
 export default function Home() {
   const [computerName, setComputerName] = useState<string>("");
   const [myName, setMyName] = useState<string>("");
@@ -13,11 +14,18 @@ export default function Home() {
   const [type, setType] = useState<number>(0);
   const [chatline, setChatline] = useState<string>("");
   const [toRenderText, setToRenderText] = useState<Message[]>([]);
+  const [id, setId] = useState<string>("");
+  const [chatId, setChatId] = useState<number>(0)
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setType(Math.floor(Math.random() * 3));
+    generateUUID()
   }, []);
+
+  useEffect(() => {
+    generateChat()
+  }, [id])
 
   useEffect(() => {
     if (toRenderText.length > 0) {
@@ -27,7 +35,7 @@ export default function Home() {
 
   useEffect(() => {
     if (myName && computerName) {
-      setToRenderText((prev) => [
+      setToRenderText((prev: any) => [
         ...prev,
         {
           AI: true,
@@ -38,6 +46,32 @@ export default function Home() {
     }
   }, [myName, computerName]);
 
+  const generateUUID = async () => {
+    const uuid = localStorage.getItem("ID")
+
+    if (uuid) {
+      setId(uuid)
+    } else {
+      const response = await fetch("/api/v1/user");
+
+      const val = await response.json()
+
+      localStorage.setItem("ID", val.message.identifier)
+    }
+  }
+
+  const generateChat = async () => {
+    const response = await fetch("/api/v1/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id, type: "NEW" }),
+    });
+
+    const val = await response.json()
+
+    setChatId(val.message)
+  }
+
   const fetchAPI = async (text: string) => {
     if (callCount > 5) {
       alert("채팅은 5번까지 가능해요! 고생하셨습니다 :)");
@@ -45,14 +79,14 @@ export default function Home() {
       return;
     }
 
-    const res = await fetch("/api", {
+    const res = await fetch("/api/v1/gpt", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ typeCode: type.toString(), input: text }),
+      body: JSON.stringify({ typeCode: type.toString(), input: text, chatId: chatId, username: myName, gptname: computerName }),
     });
 
     const data = await res.json();
-    setCallCount((prev) => prev + 1);
+    setCallCount((prev: any) => prev + 1);
     return data;
   };
 
@@ -84,13 +118,24 @@ export default function Home() {
     pushText(cleanedText, false);
     setChatline("");
 
-    const response = await fetchAPI(cleanedText);
-    if (response) {
-      const splitSentence = splitString(response.message);
+    const responseGPT = await fetchAPI(cleanedText);
+    if (responseGPT) {
+      const splitSentence = splitString(responseGPT.message);
       splitSentence.forEach((sentence: string, index: number) => {
         setTimeout(() => pushText(sentence, true), 1500 * index);
       });
     }
+
+    await fetch("/api/v1/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: responseGPT.message,
+        chatId: chatId,
+        id: id,
+      }),
+    })
+
   };
 
   const splitString = (inputString: string): string[] => {
@@ -105,7 +150,7 @@ export default function Home() {
   };
 
   const pushText = (text: string, isAI: boolean) => {
-    setToRenderText((prev) => [
+    setToRenderText((prev: any) => [
       ...prev,
       { AI: isAI, name: isAI ? computerName : myName, content: text },
     ]);
@@ -113,6 +158,9 @@ export default function Home() {
 
   return (
     <main className="select-none font-pretendard flex flex-col bg-sky-100 justify-center items-center h-screen w-screen">
+      <button className="fixed top-2 right-2 bg-orange-300 p-2 rounded-lg" onClick={localStorage.clear}>
+        캐시 제거
+      </button>
       <GuidePopUp
         isOpen={isOpen}
         closeHandler={() => setIsOpen(false)}
@@ -131,7 +179,7 @@ export default function Home() {
         className="w-full h-full sm:w-[500px] bg-sky-100 overflow-y-scroll"
       >
         <div className="flex flex-col gap-2 w-full h-full text-center p-6">
-          {toRenderText.map((text, i) => (
+          {toRenderText.map((text: any, i: any) => (
             <Bubble key={i} name={text.name} content={text.content} isAI={text.AI} />
           ))}
           <div ref={endOfMessagesRef} />
