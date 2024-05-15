@@ -60,6 +60,11 @@ export default function Home() {
     }
   }
 
+  const clearCache = () => {
+    localStorage.removeItem("ID")
+    window.location.reload();
+  }
+
   const generateChat = async () => {
     const response = await fetch("/api/v1/chat", {
       method: "POST",
@@ -158,7 +163,7 @@ export default function Home() {
 
   return (
     <main className="select-none font-pretendard flex flex-col bg-sky-100 justify-center items-center h-screen w-screen">
-      <button className="fixed top-2 right-2 bg-orange-300 p-2 rounded-lg" onClick={localStorage.clear}>
+      <button className="fixed top-2 right-2 bg-orange-300 p-2 rounded-lg" onClick={clearCache}>
         캐시 제거
       </button>
       <GuidePopUp
