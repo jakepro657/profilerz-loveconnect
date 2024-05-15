@@ -1,4 +1,4 @@
-import prisma from "./prisma"
+import prisma from "@/util/prisma"
 
 export const validateUser = async (identifier: string) => {
 
