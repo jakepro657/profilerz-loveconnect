@@ -4,29 +4,34 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "yarn pnpify prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@langchain/openai": "^0.0.9",
-    "framer-motion": "^10.16.16",
+    "@prisma/client": "5.14.0",
+    "@prisma/extension-accelerate": "^1.0.0",
+    "@yarnpkg/pnpify": "^4.1.0",
+    "framer-motion": "^11.2.0",
     "langchain": "^0.0.213",
     "next": "14.0.4",
-    "openai": "4.0.0",
+    "openai": "4.47.1",
     "react": "^18",
     "react-dom": "^18",
     "recoil": "^0.7.7"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.20",
+    "@types/react": "^18.2.58",
+    "@types/react-dom": "^18.2.19",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",
+    "prisma": "5.14.0",
     "tailwindcss": "^3.3.0",
-    "typescript": "^5"
-  }
+    "typescript": "^5.2.0"
+  },
+  "packageManager": "yarn@4.2.2"
 }
