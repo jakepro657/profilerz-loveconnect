@@ -29,7 +29,8 @@
         "./prisma/index"
       ]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",
