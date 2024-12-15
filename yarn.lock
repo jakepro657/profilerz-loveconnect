@@ -4634,7 +4634,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openai@npm:4.47.1, openai@npm:^4.41.1":
+"openai@npm:^4.41.1":
   version: 4.47.1
   resolution: "openai@npm:4.47.1"
   dependencies:
@@ -4649,6 +4649,28 @@ __metadata:
   bin:
     openai: bin/cli
   checksum: 10c0/10f5c7cd388dca758a31ccfd572d0ff732324842bc41f8cda80db043ad59035dbb9f903d0273bc14d1565f680901b7d65993b5e4c27dcf5deee2235a544ac0e4
+  languageName: node
+  linkType: hard
+
+"openai@npm:^4.76.3":
+  version: 4.76.3
+  resolution: "openai@npm:4.76.3"
+  dependencies:
+    "@types/node": "npm:^18.11.18"
+    "@types/node-fetch": "npm:^2.6.4"
+    abort-controller: "npm:^3.0.0"
+    agentkeepalive: "npm:^4.2.1"
+    form-data-encoder: "npm:1.7.2"
+    formdata-node: "npm:^4.3.2"
+    node-fetch: "npm:^2.6.7"
+  peerDependencies:
+    zod: ^3.23.8
+  peerDependenciesMeta:
+    zod:
+      optional: true
+  bin:
+    openai: bin/cli
+  checksum: 10c0/0ef8c8fd125886ebc67a8b13ff6106d701cbace274586d8f7fcc91355275dd50d4048e5e543167400c79fba6797a0dd903e0e94f2b0c7949f61c3d03f51d0ab2
   languageName: node
   linkType: hard
 
@@ -5000,7 +5022,7 @@ __metadata:
     framer-motion: "npm:^11.2.0"
     langchain: "npm:^0.0.213"
     next: "npm:14.0.4"
-    openai: "npm:4.47.1"
+    openai: "npm:^4.76.3"
     postcss: "npm:^8"
     prisma: "npm:5.14.0"
     react: "npm:^18"

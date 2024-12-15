@@ -53,7 +53,7 @@ export default function Home() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         message: {
-          content: `${name}! 모해!`,
+          content: `${name}! 你好~`,
           name: myName,
           AI: true
         },
@@ -117,7 +117,7 @@ export default function Home() {
   const generateInitialMessage = (name: string, type: number): string => {
     const messages = [
       // `${name} 요거바라랑 오숭쉐 중에 머 먹을래??`,
-      `${name}! 모해!`,
+      `${name}! 你好~`,
       // "수업 끝났어?\n배고프지ㅜㅜ",
     ];
     return messages[0];
